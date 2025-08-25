@@ -4,15 +4,17 @@ import { Button, Gap } from '../../atoms'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 
-const BlogItem = () => {
-  const navigate = useNavigate()
+const BlogItem = (props) => {
+  const navigate = useNavigate();
+  const {image, title, name, date, body} = props;
+
   return (
     <div className='blog-item'>
-        <img className='image-thumb' src={ICReact} alt="post" />
+        <img className='image-thumb' src={image} alt="post" />
         <div className='content-detail'>
-          <p className='title'>Title Blog</p>
-          <p className='author'>Author - Date Post</p>
-          <p className='body'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit voluptatum nostrum nesciunt quaerat nihil, natus perspiciatis! Quis ratione, eveniet fuga in sint suscipit earum cum ducimus ab iste, delectus ipsum!</p>
+          <p className='title'>{title}</p>
+          <p className='author'>{name} - {date}</p>
+          <p className='body'>{body}</p>
           <Gap height={20} />
           <Button title="Read More" onClick={() => navigate('/detail-blog')} />
         </div>

@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button, BlogItem, Gap } from '../../components'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 
 const Home = () => {
+  const [dataBlog, setDataBlog] = React.useState([]);
 
-  useEffect(() => {
-    Axios.get('http://localhost:3000/v1/blog/posts')
+  React.useEffect(() => {
+    Axios.get('http://localhost:3000/v1/blog/posts?page=2')
     .then(result => {
-      console.log('result: ', result.data);
+      const responseAPI = result.data;
+      setDataBlog(responseAPI.data);
     })
     .catch( err => {
       console.log('err: ', err);
@@ -24,10 +26,21 @@ const Home = () => {
       </div>
       <Gap height={20} />
       <div className="content-wrapper">
-        <BlogItem />
-        <BlogItem />
-        <BlogItem />
-        <BlogItem />
+
+        {/* Daya Dynamic */}
+        {dataBlog.map(blog => {
+          return (
+            <BlogItem
+              key={blog._id}
+              image={`http://localhost:3000/${blog.image}`}
+              title={blog.title}
+              body={blog.body}
+              name={blog.author.name}
+              date={blog.createdAt}
+            />
+          )
+        })}
+        
       </div>
       <div className="pagination">
         <Button title="Previous" />
