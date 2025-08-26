@@ -3,11 +3,14 @@ import reactLogo from '../assets/image/react.svg'
 import viteLogo from '/vite.svg'
 import React from 'react'
 // import './App.css'
-import AppRoutes from '../config/index.jsx'
+import { AppRoutes, store } from '../config'
+import { Provider } from 'react-redux'
 
 function App() {
   return (
-    <AppRoutes />
+    <Provider store={store}>
+      <AppRoutes />
+    </Provider>
   )
 }
 

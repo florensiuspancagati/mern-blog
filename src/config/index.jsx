@@ -1,3 +1,4 @@
-import AppRoutes from './Routes'
+import AppRoutes from './Routes';
+import store from './redux/store';
 
-export default AppRoutes
+export { AppRoutes, store };
