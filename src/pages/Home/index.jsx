@@ -2,20 +2,33 @@ import React from 'react'
 import { Button, BlogItem, Gap } from '../../components'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Axios from 'axios'
 
 const Home = () => {
-  const [dataBlog, setDataBlog] = React.useState([]);
+  // const [dataBlog, setDataBlog] = React.useState([]);        // Local State
 
-  const stateGlobal = useSelector((state) => state);
-  console.log('stateGlobal: ', stateGlobal);
+  const { dataBlogs, name } = useSelector((state) => state); // Global State
+  const dispatch = useDispatch();
+
+  // console.log('stateGlobal: ', stateGlobal);
+  console.log('stateGlobal: ', dataBlogs);
 
   React.useEffect(() => {
+    setTimeout(() => {
+      dispatch({type: 'UPDATE_NAME'});
+    }, 3000);
+
+
+
+
     Axios.get('http://localhost:3000/v1/blog/posts?page=2')
     .then(result => {
       const responseAPI = result.data;
-      setDataBlog(responseAPI.data);
+      // setDataBlog(responseAPI.data);
+
+      dispatch({type: 'UPDATE_DATA_BLOG', payload: responseAPI.data});
+
     })
     .catch( err => {
       console.log('err: ', err);
@@ -28,11 +41,14 @@ const Home = () => {
       <div className='create-wrapper'>
         <Button title="create blog" onClick={() => navigate('/create-blog')} />
       </div>
+
+      <p>{name}</p>
+
       <Gap height={20} />
       <div className="content-wrapper">
 
         {/* Daya Dynamic */}
-        {dataBlog.map(blog => {
+        {dataBlogs.map(blog => {
           return (
             <BlogItem
               key={blog._id}
