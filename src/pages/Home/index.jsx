@@ -4,21 +4,15 @@ import './index.scss'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Axios from 'axios'
+import { setDataBlog } from '../../config/redux/action'
 
 const Home = () => {
   const { dataBlog } = useSelector((state) => state.reducerHome); // Global State
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    Axios.get('http://localhost:3000/v1/blog/posts?page=2&perPage=2')
-    .then(result => {
-      const responseAPI = result.data;
-      dispatch({type: 'UPDATE_DATA_BLOG', payload: responseAPI.data});
-    })
-    .catch( err => {
-      console.log('err: ', err);
-    });
-  }, [])
+    dispatch(setDataBlog());
+  }, [dispatch])
 
   const navigate = useNavigate()
   return (
