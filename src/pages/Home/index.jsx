@@ -7,13 +7,24 @@ import Axios from 'axios'
 import { setDataBlog } from '../../config/redux/action'
 
 const Home = () => {
+  const [ counter, setCounter ] = React.useState(1);
   const { dataBlog } = useSelector((state) => state.reducerHome); // Global State
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(setDataBlog());
-  }, [dispatch])
+    dispatch(setDataBlog(counter));
+  }, [dispatch, counter]);
+  
+  const previous = () => {
+    setCounter(counter - 1);
 
+  };
+  const next = () => {
+    setCounter(counter + 1);
+  };
+
+  console.log('counter: ', counter);
+  
   const navigate = useNavigate()
   return (
     <div className='home-page-wrapper'>
@@ -42,9 +53,11 @@ const Home = () => {
         
       </div>
       <div className="pagination">
-        <Button title="Previous" />
+        <Button title="Previous" onClick={previous} />
         <Gap width={20} />
-        <Button title="Next" />
+        <p className="text-page">1 / 3</p>
+        <Gap width={20} />
+        <Button title="Next" onClick={next} />
       </div>
       <Gap height={20} />
     </div>
