@@ -1,3 +1,4 @@
+import { current } from '@reduxjs/toolkit';
 import Axios from 'axios';
 
 // const setDataBlog = () => {
@@ -18,6 +19,13 @@ const setDataBlog = (page) => (dispatch) => {
     .then(result => {
         const responseAPI = result.data;
         dispatch({type: 'UPDATE_DATA_BLOG', payload: responseAPI.data});
+        dispatch({
+            type: 'UPDATE_PAGE',
+            payload: {
+                currentPage: responseAPI.current_page,
+                totalPage: Math.ceil(responseAPI.total_data / responseAPI.per_page)
+            }
+        });
     })
     .catch( err => {
         console.log('err: ', err);

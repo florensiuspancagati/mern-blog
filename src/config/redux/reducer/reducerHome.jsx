@@ -1,5 +1,9 @@
 const initialStateHome = {
-    dataBlog: []
+    dataBlog: [],
+    page: {
+        currentPage: 1,
+        totalPage: 1
+    }
 }
 
 const reducerHome = (state = initialStateHome, action) => {
@@ -9,6 +13,13 @@ const reducerHome = (state = initialStateHome, action) => {
             dataBlog: action.payload
         };
     }
+
+    if(action.type === 'UPDATE_PAGE') {
+        return {
+            ...state,
+            page: action.payload
+        }
+    };
 
     return state;
 }
