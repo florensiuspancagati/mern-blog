@@ -1,12 +1,10 @@
-import React from 'react'
 import './index.scss'
-import { ICReact } from '../../../assets'
 
-const Upload = () => {
+const Upload = ({img, ...rest}) => {
   return (
     <div className="upload">
-        <img className='preview' src={ICReact} alt="preview" />
-        <input type="file" />
+        {img && <img className='preview' src={img} alt="preview" />}
+        <input type="file" {...rest} />
     </div>
   )
 }
