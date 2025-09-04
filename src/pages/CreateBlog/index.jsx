@@ -3,12 +3,23 @@ import { Input, Button, Upload, Textarea, Gap, Link } from '../../components'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 import Axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { setForm, setImagePreview } from '../../config/redux/action'
+
 
 const CreateBlog = () => {
-  const [ title, setTitle ] = React.useState('');
-  const [ body, setBody ] = React.useState('');
-  const [ imagePreview, setImagePreview ] = React.useState(null);
+  const { form } = useSelector(state => state.reducerCreateBlog);
+  const { title, body } = form;
+  const dispatch = useDispatch();
+
+
+  // const [ title, setTitle ] = React.useState('');
+  // const [ body, setBody ] = React.useState('');
+
+  // untuk image dan imagePreview, bisa pake redux, tp ada eror di redux jd pake useState biasa (local state)
   const [ image, setImage ] = React.useState(null);
+  const [ imagePreview, setImagePreview ] = React.useState(null);
+
   const navigate = useNavigate()
   const onSubmit = () => {
     console.log('title: ', title);
@@ -35,6 +46,10 @@ const CreateBlog = () => {
   };
   const onImageUpload = (e) => {
     const file = e.target.files[0];
+    // dispatch(setForm('image', file));
+    // pakai ini karna ada eror di redux
+    // dispatch(setImagePreview(URL.createObjectURL(file)));
+    // setImagePreview(file);
     setImage(file);
     setImagePreview(URL.createObjectURL(file));
   };
@@ -43,9 +58,9 @@ const CreateBlog = () => {
     <div className='blog-post'>
       <Link title="Back" onClick={() => navigate('/')} />
       <p className='title'>Create New Blog Post</p>
-      <Input lable="Post Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+      <Input lable="Post Title" value={title} onChange={(e) => dispatch(setForm('title', e.target.value))} />
       <Upload onChange={(e) => onImageUpload(e)} img={imagePreview} />
-      <Textarea value={body} onChange={(e) => setBody(e.target.value)} />
+      <Textarea value={body} onChange={(e) => dispatch(setForm('body', e.target.value))} />
       <Gap height={20} />
       <div className='button-action'>
         <Button title="Save" onClick={onSubmit} />
