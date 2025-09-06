@@ -1,12 +1,10 @@
-import React from 'react'
-import { ICReact } from '../../../assets'
 import { Button, Gap } from '../../atoms'
 import './index.scss'
 import { useNavigate } from 'react-router-dom'
 
 const BlogItem = (props) => {
   const navigate = useNavigate();
-  const {image, title, name, date, body} = props;
+  const {image, title, name, date, body, _id} = props;
 
   return (
     <div className='blog-item'>

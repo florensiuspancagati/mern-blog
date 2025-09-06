@@ -1,37 +1,38 @@
-import React, { useEffect } from 'react'
-import { ICReact, loginbg } from '../../assets'
+import React from 'react'
 import './index.scss'
 import { Link } from '../../components'
 import { useNavigate, useParams } from 'react-router-dom'
 import Axios from 'axios'
 
 const DetailBlog = () => {
-  
+  const [ data, setData ] = React.useState({});
+  const { id } = useParams();
 
-  useEffect(() => {
-    const params = useParams();
-    const id = params.id;
-  
+  React.useEffect(() => {  
     Axios.get(`http://localhost:3000/v1/blog/post/${id}`)
     .then(res => {
       console.log('success: ', res.data);
+      setData(res.data.data);
     })
     .catch(err =>{
       console.log('error: ', err);
     });
-    
   }, [id]);
 
   const navigate = useNavigate()
-  return (
-    <div className='detail-blog-wrapper'>
-      <img className='img-cover' src={loginbg} alt="thumb" />
-      <p className='blog-title'>Title Blog</p>
-      <p className='blog-author'>Author - Date Post</p>
-      <p className='blog-body'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quos voluptatibus cum expedita, voluptates repellendus sit dolor minima sint eum beatae nam consequuntur fugit error animi inventore adipisci accusamus voluptatum doloremque?</p>
-      <Link title="Back" onClick={() => navigate('/')} />
-    </div>
-  )
+
+  if(data.author) { // Cek jika data.author ada
+    return (
+      <div className='detail-blog-wrapper'>
+        <img className='img-cover' src={`http://localhost:3000/${data.image}`} alt="thumb" />
+        <p className='blog-title'>{data.title}</p>
+        <p className='blog-author'>{data.author.name} - {data.createdAt}</p>
+        <p className='blog-body'>{data.body}</p>
+        <Link title="Back" onClick={() => navigate('/')} />
+      </div>
+    )
+  }
+  return <p>Loading...</p> // Tampilkan loading jika data.author belum ada
 }
 
 export default DetailBlog
