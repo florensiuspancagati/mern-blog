@@ -13,7 +13,7 @@ const MainApp = () => {
         <div className="content-wrapper">
           <Routes>
               <Route path="/create-blog" element={<CreateBlog />} />
-              <Route path="/detail-blog" element={<DetailBlog />} />
+              <Route path="/detail-blog/:id" element={<DetailBlog />} />
               <Route path="/" element={<Home />} />
           </Routes>
         </div>
