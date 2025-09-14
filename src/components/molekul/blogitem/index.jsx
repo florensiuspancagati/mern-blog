@@ -10,7 +10,12 @@ const BlogItem = (props) => {
     <div className='blog-item'>
         <img className='image-thumb' src={image} alt="post" />
         <div className='content-detail'>
-          <p className='title'>{title}</p>
+          <div className='title-wrapper'>
+            <p className='title'>{title}</p>
+            <div className='edit-wrapper'>
+              <p href="#" className='edit' onClick={() => navigate(`/create-blog/${props._id}`)} >Edit</p> | <p href="#" className='delete' >Delete</p>
+            </div>
+          </div>
           <p className='author'>{name} - {date}</p>
           <p className='body'>{body}</p>
           <Gap height={20} />

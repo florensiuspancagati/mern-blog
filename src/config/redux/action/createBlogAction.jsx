@@ -20,7 +20,26 @@ export const postToAPI = (form, image) => {
         }
     })
     .then(res => {
-        console.log('res: ', res);
+        console.log('success: ', res);
+    })
+    .catch(err => {
+        console.log('err: ', err);
+    })
+}
+
+export const updateToAPI = (form, image, id) => {
+    const data = new FormData();
+    data.append('title', form.title);
+    data.append('body', form.body);
+    data.append('image', image);
+
+    Axios.put(`http://localhost:3000/v1/blog/post/${id}`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+    .then(res => {
+        console.log('success: ', res);
     })
     .catch(err => {
         console.log('err: ', err);
